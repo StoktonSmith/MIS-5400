@@ -7,11 +7,10 @@ Created on Mon Nov 11 20:46:26 2019
 import pyodbc
 from flask import Flask, g, render_template, abort, request
 import json
-
 CONNECTION_STRING = 'Driver={ODBC Driver 17 for SQL Server};Server=nba-data.cewblrob7gqp.us-west-1.rds.amazonaws.com,1433;Database=nba-data;Uid=admin;Pwd=Edgehill3;'
 
 # Setup Flask
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config.from_object(__name__)
 
 #Before / Teardown
@@ -88,7 +87,6 @@ def get_single_nhl_team(id):
 
     for row in curs.fetchall():
         data.append(dict(zip(columns, row)))
-
     return json.dumps(data, indent=4, sort_keys=True, default=str)
 
 # GET Players From a Single Team
